@@ -556,29 +556,95 @@ section{padding:3.5rem 1.25rem}
 .uc.nearest .uc-nearest-badge{display:inline-block}
 @keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 
-/* ─── Geolocation finder button ─── */
-.geo-finder{
-  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.85rem;
-  margin:-.5rem 0 2.5rem;padding:1.25rem;
-  background:#fff;border:2px dashed var(--s3);border-radius:.875rem;
-  text-align:center;
+/* ─── UNIT SELECTION MODAL ─── */
+.modal{position:fixed;inset:0;z-index:9999;display:none}
+.modal.open{display:block}
+.modal-backdrop{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(10px);
+  animation:fade .25s ease;
 }
-.geo-finder-text{
-  font-family:var(--bc);font-weight:700;font-size:.95rem;
-  text-transform:uppercase;letter-spacing:.05em;color:#0a0a0a;
+.modal-box{
+  position:relative;z-index:1;
+  background:#fff;border-radius:1.2rem;
+  padding:2rem 1.5rem 1.5rem;
+  max-width:540px;width:calc(100% - 2rem);
+  margin:2rem auto;
+  box-shadow:0 24px 80px rgba(0,0,0,.5);
+  animation:slideUp .35s cubic-bezier(.2,.9,.3,1);
+  max-height:calc(100svh - 4rem);overflow-y:auto;
 }
-.geo-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.75rem 1.4rem;border-radius:9999px;
-  background:var(--r);color:#fff;border:none;
-  font-family:var(--bc);font-weight:800;font-size:.82rem;
-  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-  box-shadow:0 4px 18px rgba(232,53,74,.3);
-  transition:background .18s,transform .18s,box-shadow .18s;
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;z-index:2;
+  background:#f0f0f0;border:none;
+  width:2rem;height:2rem;border-radius:50%;
+  font-size:1.25rem;cursor:pointer;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  color:#555;transition:background .15s,color .15s;
 }
-.geo-btn:hover{background:var(--rd);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,53,74,.45)}
-.geo-btn:disabled{opacity:.6;cursor:wait}
-.geo-status{font-size:.82rem;color:#555}
+.modal-close:hover{background:var(--r);color:#fff}
+.modal-head{text-align:center;margin-bottom:1.5rem;padding:0 1rem}
+.modal-head h3{
+  font-family:var(--bc);font-size:1.9rem;font-weight:900;
+  text-transform:uppercase;color:#0a0a0a;line-height:1;
+  margin-bottom:.4rem;letter-spacing:-.02em;
+}
+.modal-head p{font-size:.88rem;color:#555;line-height:1.4}
+.modal-head p.success{color:#16A34A;font-weight:700}
+.modal-head p.loading{color:var(--r);font-weight:600}
+.modal-list{display:flex;flex-direction:column;gap:.65rem}
+
+.mu-card{
+  display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;
+  align-items:center;
+  background:#f8f8f8;border:2px solid transparent;
+  border-radius:.75rem;padding:.9rem 1rem;
+  transition:border-color .25s,background .25s,transform .25s;
+}
+.mu-card.first{
+  background:linear-gradient(135deg,#fff 0%,#fff5f6 100%);
+  border-color:var(--r);
+  box-shadow:0 4px 20px rgba(232,53,74,.15);
+  transform:scale(1.02);
+}
+.mu-rank{
+  font-family:var(--bc);font-weight:900;font-size:1.85rem;
+  color:#cfcfcf;min-width:2rem;text-align:center;line-height:1;
+  letter-spacing:-.03em;
+}
+.mu-card.first .mu-rank{color:var(--r)}
+.mu-info{min-width:0}
+.mu-info h4{
+  font-family:var(--bc);font-size:1.1rem;font-weight:900;
+  text-transform:uppercase;color:#0a0a0a;line-height:1.1;
+  margin-bottom:.15rem;
+}
+.mu-info p{font-size:.78rem;color:#555;line-height:1.35}
+.mu-dist{
+  display:inline-block;font-family:var(--bc);font-weight:800;
+  font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--r);margin-top:.3rem;
+  background:rgba(232,53,74,.08);padding:.1rem .5rem;border-radius:9999px;
+}
+.mu-btn{
+  background:#16A34A;color:#fff;
+  padding:.6rem .95rem;border-radius:.5rem;
+  font-family:var(--bc);font-weight:800;font-size:.75rem;
+  letter-spacing:.05em;text-transform:uppercase;text-decoration:none;
+  white-space:nowrap;cursor:pointer;border:none;
+  display:inline-flex;align-items:center;gap:.3rem;
+  transition:background .18s,transform .18s;
+  box-shadow:0 2px 10px rgba(22,163,74,.3);
+}
+.mu-btn:hover{background:#15803D;transform:translateY(-1px)}
+
+@media(max-width:480px){
+  .mu-card{grid-template-columns:auto 1fr;gap:.6rem .8rem}
+  .mu-btn{grid-column:1/-1;justify-content:center;margin-top:.3rem}
+  .modal-head h3{font-size:1.5rem}
+}
 
 /* ─── FAQ ─── */
 #faq{background:#f4f4f4;padding:6rem 1.25rem;position:relative}
@@ -868,7 +934,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
     src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/pratique-logo-academia.webp" alt="Pratique Fitness"
     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
   <span class="nav-logo-txt">Pratique Fitness</span>
-  <a href="#offer" class="nav-btn">Garantir — R$9,90</a>
+  <a href="#offer" class="nav-btn" data-open-modal>Garantir — R$9,90</a>
 </nav>
 
 <!-- HERO -->
@@ -986,7 +1052,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
 
       <p class="hero-desc">Acesso às 4 unidades em Palhoça com um plano só. <strong>Sem multa.</strong></p>
       <p class="hero-small">Acesso às 4 unidades em Palhoça com um plano só · Sem multa</p>
-      <a href="#offer" class="btn btn-green">
+      <a href="#offer" class="btn btn-green" data-open-modal>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         GARANTIR MINHA VAGA
       </a>
@@ -1176,16 +1242,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
       <h2 class="sh-h">4 unidades. <span class="dim">Uma sempre perto.</span></h2>
     </div>
 
-    <!-- Geolocation finder -->
-    <div class="geo-finder r0">
-      <span class="geo-finder-text">Qual fica mais perto de você?</span>
-      <button type="button" class="geo-btn" id="geoBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-        Usar minha localização
-      </button>
-      <span class="geo-status" id="geoStatus"></span>
-    </div>
-
     <div class="units-grid">
 
       <div class="uc r0 d1" data-lat="-27.673838" data-lng="-48.663807" data-name="Rio Grande 1">
@@ -1297,7 +1353,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
     <h2 class="cta-h">Daqui a um ano você<br>vai querer ter<br>começado hoje.</h2>
     <p class="cta-sub">R$9,90 no primeiro mês. 4 unidades. Tudo incluso.</p>
     <p class="cta-note">A vaga tá disponível agora — não vai estar pra sempre.</p>
-    <a href="#" class="btn-green btn-green-lg">
+    <a href="#" class="btn-green btn-green-lg" data-open-modal>
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
       GARANTIR MINHA VAGA — R$9,90
     </a>
@@ -1312,9 +1368,22 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
   <p>© 2025 Pratique Fitness · Palhoça, SC</p>
 </footer>
 
+<!-- UNIT SELECTION MODAL -->
+<div class="modal" id="unitModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">×</button>
+    <div class="modal-head">
+      <h3 id="modalTitle">Escolha sua unidade</h3>
+      <p id="modalSubtitle">Permita a localização pra ordenar da mais perto pra mais longe</p>
+    </div>
+    <div class="modal-list" id="modalList"></div>
+  </div>
+</div>
+
 <!-- FLOAT MOBILE CTA -->
 <div id="fcta">
-  <a href="#offer">
+  <a href="#offer" data-open-modal>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
     GARANTIR VAGA — R$9,90
   </a>
@@ -1517,46 +1586,80 @@ document.querySelectorAll('.feat-card,.uc,.hero-card').forEach(c=>{
   frame();
 })();
 
-// ─── GEOLOCATION: NEAREST UNIT ───
+// ─── UNIT MODAL + AUTO GEOLOCATION ───
 (function(){
-  const btn=document.getElementById('geoBtn');
-  const status=document.getElementById('geoStatus');
-  if(!btn)return;
-  const units=[...document.querySelectorAll('.uc[data-lat]')];
-  if(!units.length)return;
+  const modal=document.getElementById('unitModal');
+  if(!modal)return;
+  const backdrop=modal.querySelector('.modal-backdrop');
+  const closeBtn=document.getElementById('modalClose');
+  const subtitle=document.getElementById('modalSubtitle');
+  const listEl=document.getElementById('modalList');
 
-  function haversine(lat1,lng1,lat2,lng2){
-    const R=6371,toRad=x=>x*Math.PI/180;
-    const dLat=toRad(lat2-lat1),dLng=toRad(lng2-lng1);
-    const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
-    return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  const units=[
+    {name:'Rio Grande 1',addr:'Av. Rio Grande, 1600 — Palhoça/SC',lat:-27.673838,lng:-48.663807},
+    {name:'Rio Grande 2',addr:'Av. Vidal Procópio Lohn, 360 — Palhoça/SC',lat:-27.664917,lng:-48.662082},
+    {name:'Nova Palhoça',addr:'Av. Aleixo Alves de Souza, Q52 — Palhoça/SC',lat:-27.673862,lng:-48.663871},
+    {name:'Centro de Palhoça',addr:'Av. Pref. Nelson Martins, 1733 — Palhoça/SC',lat:-27.653420,lng:-48.673470}
+  ];
+
+  function haversine(a,b,c,d){
+    const R=6371,rad=x=>x*Math.PI/180;
+    const dLat=rad(c-a),dLng=rad(d-b);
+    const h=Math.sin(dLat/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(dLng/2)**2;
+    return R*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));
   }
   function fmt(d){return d<1?Math.round(d*1000)+' m':d.toFixed(1).replace('.',',')+' km'}
 
-  function rank(lat,lng){
-    const list=units.map(u=>({el:u,d:haversine(lat,lng,+u.dataset.lat,+u.dataset.lng)})).sort((a,b)=>a.d-b.d);
-    list.forEach((it,i)=>{
-      const dWrap=it.el.querySelector('.uc-dist');
-      const dSpan=dWrap&&dWrap.querySelector('span');
-      if(dSpan){dSpan.textContent=fmt(it.d);dWrap.classList.add('on')}
-      it.el.classList.toggle('nearest',i===0);
-    });
-    status.textContent=`Mais próxima: ${list[0].el.dataset.name} (${fmt(list[0].d)})`;
-    setTimeout(()=>list[0].el.scrollIntoView({behavior:'smooth',block:'center'}),400);
+  function render(list,withDist){
+    listEl.innerHTML=list.map((u,i)=>`
+      <div class="mu-card ${i===0&&withDist?'first':''}">
+        <div class="mu-rank">${i+1}°</div>
+        <div class="mu-info">
+          <h4>${u.name}</h4>
+          <p>${u.addr}</p>
+          ${withDist?`<span class="mu-dist">${fmt(u.d)} de você</span>`:''}
+        </div>
+        <a href="https://wa.me/?text=${encodeURIComponent('Oi! Quero garantir minha vaga na unidade '+u.name+' por R$9,90')}" target="_blank" rel="noopener" class="mu-btn">Quero essa</a>
+      </div>
+    `).join('');
   }
 
-  btn.addEventListener('click',()=>{
-    if(!navigator.geolocation){status.textContent='Navegador sem suporte';return}
-    btn.disabled=true;
-    const originalHTML=btn.innerHTML;
-    btn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>Buscando...';
-    status.textContent='';
-    navigator.geolocation.getCurrentPosition(
-      pos=>{rank(pos.coords.latitude,pos.coords.longitude);btn.innerHTML=originalHTML;btn.disabled=false},
-      err=>{status.textContent=err.code===1?'Permita a localização no navegador':'Não foi possível obter localização';btn.innerHTML=originalHTML;btn.disabled=false},
-      {timeout:10000,enableHighAccuracy:true}
-    );
+  function open(){
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    subtitle.textContent='Detectando sua localização...';
+    subtitle.className='loading';
+    render(units,false);
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        pos=>{
+          const sorted=units.map(u=>({...u,d:haversine(pos.coords.latitude,pos.coords.longitude,u.lat,u.lng)})).sort((a,b)=>a.d-b.d);
+          subtitle.textContent=`✓ Mais próxima: ${sorted[0].name}`;
+          subtitle.className='success';
+          render(sorted,true);
+        },
+        ()=>{
+          subtitle.textContent='Escolha a unidade que preferir';
+          subtitle.className='';
+        },
+        {timeout:10000,enableHighAccuracy:true}
+      );
+    }else{
+      subtitle.textContent='Escolha a unidade que preferir';
+      subtitle.className='';
+    }
+  }
+  function close(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  document.querySelectorAll('[data-open-modal]').forEach(b=>{
+    b.addEventListener('click',e=>{e.preventDefault();open()});
   });
+  backdrop.addEventListener('click',close);
+  closeBtn.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close()});
 })();
 
 // ─── GEO SHAPES MOUSE PARALLAX ───
