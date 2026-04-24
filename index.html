@@ -66,10 +66,8 @@ section{padding:3.5rem 1.25rem}
   box-shadow:0 2px 12px rgba(0,0,0,.05);
 }
 .nav-logo{
-  height:2.5rem;width:10rem;display:block;
-  background-color:var(--r);
-  -webkit-mask:url('https://pratiquefitness.com.br/wp-content/uploads/2025/10/pratique-logo-academia.webp') no-repeat left center / contain;
-  mask:url('https://pratiquefitness.com.br/wp-content/uploads/2025/10/pratique-logo-academia.webp') no-repeat left center / contain;
+  height:2.5rem;width:auto;display:block;object-fit:contain;
+  filter:brightness(0) saturate(100%) invert(37%) sepia(88%) saturate(2800%) hue-rotate(332deg) brightness(91%) contrast(97%);
 }
 .nav-logo-txt{font-family:var(--bc);font-weight:900;font-size:1.25rem;color:var(--r);letter-spacing:.04em;text-transform:uppercase;display:none}
 .nav-btn{
@@ -936,7 +934,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
 
 <!-- NAV -->
 <nav id="nav">
-  <span class="nav-logo" role="img" aria-label="Pratique Fitness"></span>
+  <img class="nav-logo" src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/pratique-logo-academia.webp" alt="Pratique Fitness">
   <a href="#offer" class="nav-btn" data-open-modal>Garantir — R$9,90</a>
 </nav>
 
