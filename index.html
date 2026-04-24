@@ -59,13 +59,18 @@ section{padding:3.5rem 1.25rem}
 /* ─── NAV ─── */
 #nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
+  background:#fff;
   border-bottom:1px solid var(--s3);
-  padding:.75rem 1.25rem;
+  padding:.85rem 1.5rem;
   display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,.05);
 }
-.nav-logo{height:1.875rem;width:auto;filter:none;object-fit:contain}
-.nav-logo-txt{font-family:var(--bc);font-weight:900;font-size:1.1rem;color:var(--r);letter-spacing:.04em;text-transform:uppercase;display:none}
+.nav-logo{
+  height:2.5rem;width:auto;object-fit:contain;
+  filter:none;
+  display:block;
+}
+.nav-logo-txt{font-family:var(--bc);font-weight:900;font-size:1.25rem;color:var(--r);letter-spacing:.04em;text-transform:uppercase;display:none}
 .nav-btn{
   font-family:var(--bc);font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;
   background:#16A34A;color:#fff;padding:.5rem 1.25rem;border-radius:.5rem;
