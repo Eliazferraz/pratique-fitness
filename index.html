@@ -511,10 +511,74 @@ section{padding:3.5rem 1.25rem}
 }
 .uc-map{
   display:inline-flex;align-items:center;gap:.35rem;
-  font-family:var(--bc);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  font-family:var(--bc);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
   color:var(--r);text-decoration:none;transition:color .15s;
 }
 .uc-map:hover{color:var(--rl)}
+
+/* ─── UC actions row + CTA button ─── */
+.uc-actions{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.9rem;flex-wrap:wrap}
+.uc-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  font-family:var(--bc);font-weight:800;font-size:.82rem;
+  letter-spacing:.06em;text-transform:uppercase;
+  background:#16A34A;color:#fff;
+  padding:.7rem 1.1rem;border-radius:.55rem;
+  text-decoration:none;cursor:pointer;
+  box-shadow:0 2px 14px rgba(22,163,74,.3);
+  transition:background .18s ease,transform .18s ease,box-shadow .18s ease;
+  flex:1;min-width:140px;
+}
+.uc-cta:hover{background:#15803D;transform:translateY(-1px);box-shadow:0 4px 20px rgba(22,163,74,.45)}
+
+/* ─── Distance badge + Nearest highlight ─── */
+.uc-dist{
+  display:none;align-items:center;gap:.35rem;
+  margin:.25rem 0 .55rem;
+  font-family:var(--bc);font-weight:800;font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--r);
+}
+.uc-dist.on{display:inline-flex}
+.uc.nearest{
+  border-color:var(--r)!important;
+  box-shadow:0 0 0 3px rgba(232,53,74,.14),0 16px 40px rgba(232,53,74,.18)!important;
+}
+.uc-nearest-badge{
+  position:absolute;top:.875rem;right:.875rem;z-index:3;
+  display:none;background:var(--r);color:#fff;
+  padding:.22rem .65rem;border-radius:9999px;
+  font-family:var(--bc);font-weight:800;font-size:.55rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  box-shadow:0 2px 10px rgba(232,53,74,.4);
+  animation:pulse-badge 1.6s ease-in-out infinite;
+}
+.uc.nearest .uc-nearest-badge{display:inline-block}
+@keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* ─── Geolocation finder button ─── */
+.geo-finder{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.85rem;
+  margin:-.5rem 0 2.5rem;padding:1.25rem;
+  background:#fff;border:2px dashed var(--s3);border-radius:.875rem;
+  text-align:center;
+}
+.geo-finder-text{
+  font-family:var(--bc);font-weight:700;font-size:.95rem;
+  text-transform:uppercase;letter-spacing:.05em;color:#0a0a0a;
+}
+.geo-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 1.4rem;border-radius:9999px;
+  background:var(--r);color:#fff;border:none;
+  font-family:var(--bc);font-weight:800;font-size:.82rem;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  box-shadow:0 4px 18px rgba(232,53,74,.3);
+  transition:background .18s,transform .18s,box-shadow .18s;
+}
+.geo-btn:hover{background:var(--rd);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,53,74,.45)}
+.geo-btn:disabled{opacity:.6;cursor:wait}
+.geo-status{font-size:.82rem;color:#555}
 
 /* ─── FAQ ─── */
 #faq{background:#f4f4f4;padding:6rem 1.25rem;position:relative}
@@ -1111,61 +1175,92 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--rl);outline-offset:
       <span class="sh-eye">Onde você vai treinar</span>
       <h2 class="sh-h">4 unidades. <span class="dim">Uma sempre perto.</span></h2>
     </div>
+
+    <!-- Geolocation finder -->
+    <div class="geo-finder r0">
+      <span class="geo-finder-text">Qual fica mais perto de você?</span>
+      <button type="button" class="geo-btn" id="geoBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+        Usar minha localização
+      </button>
+      <span class="geo-status" id="geoStatus"></span>
+    </div>
+
     <div class="units-grid">
 
-      <div class="uc r0 d1">
+      <div class="uc r0 d1" data-lat="-27.673838" data-lng="-48.663807" data-name="Rio Grande 1">
+        <span class="uc-nearest-badge">✓ Mais próxima</span>
         <div class="uc-photo-wrap">
           <span class="uc-num">Unidade 01</span>
           <img class="uc-photo" src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/academia-pratique-fitness-estrutura-01.webp" alt="Rio Grande 1" loading="lazy" onerror="this.closest('.uc-photo-wrap').style.background='#161616'">
         </div>
         <div class="uc-body">
           <div class="uc-name">Rio Grande 1</div>
+          <div class="uc-dist"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0M15 12l5.25 2.25M3.75 12L9 14.25m-4.5 0a7.5 7.5 0 1115 0m-15 0v2.625a1.5 1.5 0 01-3 0M19.5 14.25V16.5a1.5 1.5 0 01-3 0v-2.25"/></svg><span></span> de você</div>
           <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="var(--r)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg><span class="uc-txt">Av. Rio Grande, 1600 — Palhoça/SC</span></div>
-          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,.2)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb–Dom 09:00–15:00</span></div>
+          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(0,0,0,.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb–Dom 09:00–15:00</span></div>
           <div class="uc-tags"><span class="utag">Estacionamento</span><span class="utag">Ar-cond.</span><span class="utag">Coletivas</span><span class="utag">Nutricionista</span></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=-27.673838%2C-48.663807" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Ver no mapa</a>
+          <div class="uc-actions">
+            <a href="#offer" class="uc-cta">Quero essa unidade</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=-27.673838%2C-48.663807" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Mapa</a>
+          </div>
         </div>
       </div>
 
-      <div class="uc r0 d2">
+      <div class="uc r0 d2" data-lat="-27.664917" data-lng="-48.662082" data-name="Rio Grande 2">
+        <span class="uc-nearest-badge">✓ Mais próxima</span>
         <div class="uc-photo-wrap">
           <span class="uc-num">Unidade 02</span>
           <img class="uc-photo" src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/academia-pratique-fitness-estrutura-02.webp" alt="Rio Grande 2" loading="lazy" onerror="this.closest('.uc-photo-wrap').style.background='#161616'">
         </div>
         <div class="uc-body">
           <div class="uc-name">Rio Grande 2</div>
+          <div class="uc-dist"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0M15 12l5.25 2.25M3.75 12L9 14.25m-4.5 0a7.5 7.5 0 1115 0m-15 0v2.625a1.5 1.5 0 01-3 0M19.5 14.25V16.5a1.5 1.5 0 01-3 0v-2.25"/></svg><span></span> de você</div>
           <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="var(--r)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg><span class="uc-txt">Av. Vidal Procópio Lohn, 360 — Palhoça/SC</span></div>
-          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,.2)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb 09:00–15:00 · Dom 15:00–20:00</span></div>
+          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(0,0,0,.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb 09:00–15:00 · Dom 15:00–20:00</span></div>
           <div class="uc-tags"><span class="utag">Kids</span><span class="utag">Massagem</span><span class="utag">Estacionamento</span><span class="utag">Coletivas</span></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=-27.664917%2C-48.662082" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Ver no mapa</a>
+          <div class="uc-actions">
+            <a href="#offer" class="uc-cta">Quero essa unidade</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=-27.664917%2C-48.662082" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Mapa</a>
+          </div>
         </div>
       </div>
 
-      <div class="uc r0 d3">
+      <div class="uc r0 d3" data-lat="-27.673862" data-lng="-48.663871" data-name="Nova Palhoça">
+        <span class="uc-nearest-badge">✓ Mais próxima</span>
         <div class="uc-photo-wrap">
           <span class="uc-num">Unidade 03</span>
           <img class="uc-photo" src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/academia-pratique-fitness-estrutura-03.webp" alt="Nova Palhoça" loading="lazy" onerror="this.closest('.uc-photo-wrap').style.background='#161616'">
         </div>
         <div class="uc-body">
           <div class="uc-name">Nova Palhoça</div>
+          <div class="uc-dist"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0M15 12l5.25 2.25M3.75 12L9 14.25m-4.5 0a7.5 7.5 0 1115 0m-15 0v2.625a1.5 1.5 0 01-3 0M19.5 14.25V16.5a1.5 1.5 0 01-3 0v-2.25"/></svg><span></span> de você</div>
           <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="var(--r)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg><span class="uc-txt">Av. Aleixo Alves de Souza, Q52 — Palhoça/SC</span></div>
-          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,.2)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb–Dom 09:00–15:00</span></div>
+          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(0,0,0,.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb–Dom 09:00–15:00</span></div>
           <div class="uc-tags"><span class="utag">Massagem</span><span class="utag">Estacionamento</span><span class="utag">Ar-cond.</span><span class="utag">Nutricionista</span></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=-27.673862%2C-48.663871" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Ver no mapa</a>
+          <div class="uc-actions">
+            <a href="#offer" class="uc-cta">Quero essa unidade</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=-27.673862%2C-48.663871" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Mapa</a>
+          </div>
         </div>
       </div>
 
-      <div class="uc r0 d4">
+      <div class="uc r0 d4" data-lat="-27.653420" data-lng="-48.673470" data-name="Centro de Palhoça">
+        <span class="uc-nearest-badge">✓ Mais próxima</span>
         <div class="uc-photo-wrap">
           <span class="uc-num">Unidade 04</span>
           <img class="uc-photo" src="https://pratiquefitness.com.br/wp-content/uploads/2025/10/academia-pratique-fitness-estrutura-04.webp" alt="Centro de Palhoça" loading="lazy" onerror="this.closest('.uc-photo-wrap').style.background='#161616'">
         </div>
         <div class="uc-body">
           <div class="uc-name">Centro de Palhoça</div>
+          <div class="uc-dist"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0M15 12l5.25 2.25M3.75 12L9 14.25m-4.5 0a7.5 7.5 0 1115 0m-15 0v2.625a1.5 1.5 0 01-3 0M19.5 14.25V16.5a1.5 1.5 0 01-3 0v-2.25"/></svg><span></span> de você</div>
           <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="var(--r)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg><span class="uc-txt">Av. Pref. Nelson Martins, 1733 — Palhoça/SC</span></div>
-          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,.2)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb 09:00–15:00 · Dom fechado</span></div>
+          <div class="uc-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(0,0,0,.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="uc-txt">Seg–Sex 05:30–23:00 · Sáb 09:00–15:00 · Dom fechado</span></div>
           <div class="uc-tags"><span class="utag">Pilates</span><span class="utag">Coletivas</span><span class="utag">Estacionamento</span><span class="utag">Nutricionista</span></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=-27.653420%2C-48.673470" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Ver no mapa</a>
+          <div class="uc-actions">
+            <a href="#offer" class="uc-cta">Quero essa unidade</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=-27.653420%2C-48.673470" target="_blank" rel="noopener" class="uc-map"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Mapa</a>
+          </div>
         </div>
       </div>
 
@@ -1420,6 +1515,48 @@ document.querySelectorAll('.feat-card,.uc,.hero-card').forEach(c=>{
   resize();
   pts=Array.from({length:N},()=>new P());
   frame();
+})();
+
+// ─── GEOLOCATION: NEAREST UNIT ───
+(function(){
+  const btn=document.getElementById('geoBtn');
+  const status=document.getElementById('geoStatus');
+  if(!btn)return;
+  const units=[...document.querySelectorAll('.uc[data-lat]')];
+  if(!units.length)return;
+
+  function haversine(lat1,lng1,lat2,lng2){
+    const R=6371,toRad=x=>x*Math.PI/180;
+    const dLat=toRad(lat2-lat1),dLng=toRad(lng2-lng1);
+    const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+    return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  }
+  function fmt(d){return d<1?Math.round(d*1000)+' m':d.toFixed(1).replace('.',',')+' km'}
+
+  function rank(lat,lng){
+    const list=units.map(u=>({el:u,d:haversine(lat,lng,+u.dataset.lat,+u.dataset.lng)})).sort((a,b)=>a.d-b.d);
+    list.forEach((it,i)=>{
+      const dWrap=it.el.querySelector('.uc-dist');
+      const dSpan=dWrap&&dWrap.querySelector('span');
+      if(dSpan){dSpan.textContent=fmt(it.d);dWrap.classList.add('on')}
+      it.el.classList.toggle('nearest',i===0);
+    });
+    status.textContent=`Mais próxima: ${list[0].el.dataset.name} (${fmt(list[0].d)})`;
+    setTimeout(()=>list[0].el.scrollIntoView({behavior:'smooth',block:'center'}),400);
+  }
+
+  btn.addEventListener('click',()=>{
+    if(!navigator.geolocation){status.textContent='Navegador sem suporte';return}
+    btn.disabled=true;
+    const originalHTML=btn.innerHTML;
+    btn.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>Buscando...';
+    status.textContent='';
+    navigator.geolocation.getCurrentPosition(
+      pos=>{rank(pos.coords.latitude,pos.coords.longitude);btn.innerHTML=originalHTML;btn.disabled=false},
+      err=>{status.textContent=err.code===1?'Permita a localização no navegador':'Não foi possível obter localização';btn.innerHTML=originalHTML;btn.disabled=false},
+      {timeout:10000,enableHighAccuracy:true}
+    );
+  });
 })();
 
 // ─── GEO SHAPES MOUSE PARALLAX ───
