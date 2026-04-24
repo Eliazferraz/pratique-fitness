@@ -1596,10 +1596,10 @@ document.querySelectorAll('.feat-card,.uc,.hero-card').forEach(c=>{
   const listEl=document.getElementById('modalList');
 
   const units=[
-    {name:'Rio Grande 1',addr:'Av. Rio Grande, 1600 — Palhoça/SC',lat:-27.673838,lng:-48.663807},
-    {name:'Rio Grande 2',addr:'Av. Vidal Procópio Lohn, 360 — Palhoça/SC',lat:-27.664917,lng:-48.662082},
-    {name:'Nova Palhoça',addr:'Av. Aleixo Alves de Souza, Q52 — Palhoça/SC',lat:-27.673862,lng:-48.663871},
-    {name:'Centro de Palhoça',addr:'Av. Pref. Nelson Martins, 1733 — Palhoça/SC',lat:-27.653420,lng:-48.673470}
+    {name:'Rio Grande 1',addr:'Av. Rio Grande, 1600 — Palhoça/SC',lat:-27.673838,lng:-48.663807,url:'https://novo.pratiquefitness.com.br/checkoutpageplano/nova_palhoca_rio_grande?pl=555'},
+    {name:'Rio Grande 2',addr:'Av. Vidal Procópio Lohn, 360 — Palhoça/SC',lat:-27.664917,lng:-48.662082,url:'https://novo.pratiquefitness.com.br/checkoutpageplano/riograndedois?pl=555'},
+    {name:'Nova Palhoça',addr:'Av. Aleixo Alves de Souza, Q52 — Palhoça/SC',lat:-27.673862,lng:-48.663871,url:'https://novo.pratiquefitness.com.br/checkoutpageplano/nova_palhoca_rio_grande?pl=555'},
+    {name:'Centro de Palhoça',addr:'Av. Pref. Nelson Martins, 1733 — Palhoça/SC',lat:-27.653420,lng:-48.673470,url:'https://novo.pratiquefitness.com.br/checkoutpageplano/centropalhoca?pl=502'}
   ];
 
   function haversine(a,b,c,d){
@@ -1619,7 +1619,7 @@ document.querySelectorAll('.feat-card,.uc,.hero-card').forEach(c=>{
           <p>${u.addr}</p>
           ${withDist?`<span class="mu-dist">${fmt(u.d)} de você</span>`:''}
         </div>
-        <a href="https://wa.me/?text=${encodeURIComponent('Oi! Quero garantir minha vaga na unidade '+u.name+' por R$9,90')}" target="_blank" rel="noopener" class="mu-btn">Quero essa</a>
+        <a href="${u.url}" target="_blank" rel="noopener" class="mu-btn">Quero essa</a>
       </div>
     `).join('');
   }
